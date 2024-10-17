@@ -249,12 +249,12 @@ def add_sensor_route():
 
 @app.route("/admin_centre/")
 def admin_centre():
- latest_readings = get_latest_readings()
+    latest_readings = get_latest_readings()
 #     conn = sqlite3.connect(DATABASE)
 #     sensors = conn.execute('SELECT * FROM TemperatureReading').fetchall()
 #     conn.close()
 #     sensors=sensors
- return render_template("admin_centre.html", readings=latest_readings )
+    return render_template("admin_centre.html", readings=latest_readings )
 
 
 
