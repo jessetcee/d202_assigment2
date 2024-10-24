@@ -1,0 +1,95 @@
+{% extends "dashboard.html" %}
+{% block title %}Admin Centre{% endblock %}
+
+{% block content %}
+{% include 'navbar.html' %}
+<div id="dashboard">
+    <h2 class="ui header">Live Temperature Readings</h2>
+    <div id="table-container">
+        <table class="ui celled table">
+        <thead>
+            <tr>
+                <th>Sensor Name</th>
+                <th>Location</th>
+                <th>Temperature (°C)</th>
+                <th>Timestamp</th>
+            </tr>
+        </thead>
+        <tbody id="table-body">
+            {% for reading in readings %}
+            <tr>
+                <td>{{ reading[2] }}</td> <!-- Location -->
+                <td>{{ reading[3] }}</td> <!-- Temperature -->
+                <td>{{ reading[4] }}</td> <!-- Timestamp -->
+                <td>{{ reading[5] }}</td> <!-- Timestamp -->
+            </tr>
+            {% endfor %}
+        </tbody>
+        </table>
+    </div>
+    <div id="sensor-buttons">
+        <a href="/add-sensor" ><button>New Sensor</button> </a>
+        <a href="#"><button>Edit Sensor</button></a>
+        <a href="#"><button>Remove Sensor</button></a>
+    </div>
+</div>
+
+<style>
+    #dashboard {
+        width: calc(100vw - 50px);
+        height: calc(100vh - 120px);
+        display: flex;
+        flex-direction: column; 
+        justify-content: center;
+        align-items: center;
+        overflow-y: scroll;
+        padding: 25px;
+        background-color: rgb(241, 241, 241);
+    }
+
+    #sensor-buttons {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    h2 {
+        font-size: 30px;
+    }
+
+    #table-container {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        justify-content: flex-start;
+        overflow-y: scroll;
+    }
+
+    table {
+        width: 100%;
+        height: 100%;
+        background-color: black;
+    }
+
+    th {
+        width: auto;
+        background-color: rgb(224, 224, 224);
+        padding: 10px;
+        font-size: 20px;
+        white-space: nowrap;
+    }
+
+    td {
+        height: 1%;
+        white-space: nowrap;
+        text-align: center;
+        padding: 5px 10px;
+        background-color: white;
+        box-sizing: border-box;
+    }
+</style>
+
+{% endblock %}

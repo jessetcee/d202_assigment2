@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}New Sensor{% endblock %}
+
+{% block content %}
+    <div class="ui container">
+        <h2>Add New Sensor</h2>
+        <form class="ui form" method="POST">
+            <div class="field">
+                <label for="sensor_name">Sensor Name</label>
+                <input type="text" name="sensor_name" required>
+            </div>
+            <button class="ui blue button">Cancel</button>
+            <button class="ui blue button" type="submit">Add Sensor</button>
+        </form>
+    </div>
+    <style>
+        body {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f4f4f4;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        .container {
+            width: 60vw;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        input {
+            background-color: gray;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        .ui.form {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .ui.button {
+            margin-top: 20px;
+        }
+    </style>
+{% endblock %}

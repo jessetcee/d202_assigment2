@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block title %}Log In{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div id="card">
+        <h1 id="title">Welcome!</h1>
+        <form method="POST" action="{{ url_for('login') }}">
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="username" required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" required>
+            </div>
+            <button class="btn btn-primary" type="submit">Log In</button>
+        </form>
+    </div>
+</div>
+
+<style>
+    .container {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-items: center;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+    }
+
+    #card {
+        height: calc(70vh - 100px);
+        aspect-ratio: 1 / 1;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        flex-direction: column;
+        background-color: var(--theme-5);
+        border-radius: 10px;
+        padding: 50px;
+        box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.5);
+    }
+
+    #title {
+        font-weight: 600;
+    }
+
+    form {
+        width: 100%;
+    }
+    
+    .form-label {
+        margin-bottom: 0;
+        font-size: 20px;
+        color: var(--theme-1);
+    }
+
+    .btn {
+        width: 75%;
+        font-weight: 600;
+    }
+</style>
+{% endblock %}

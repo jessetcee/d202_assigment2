@@ -11,6 +11,8 @@ from datetime import datetime
 url = 'http://127.0.0.1:5000/api/meters'
 
 def send_meter_data():
+    con_tries = 0
+
     while True:
         data = []
         sensors = request_meter_data()
@@ -41,8 +43,12 @@ def send_meter_data():
 
             time.sleep(5)
         else:
-            print(f'Endpoint is not available!')
-            return
+            if con_tries == 3:
+                print(f'Endpoint is not available!')
+                return
+            else:
+                print(f'Unable to connect to endpoint, trying again!')
+                con_tries = con_tries + 1
 
 def request_meter_data():
     try:
