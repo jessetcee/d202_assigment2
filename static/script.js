@@ -8,6 +8,17 @@ function updateSensorData() {
         });
 }
 
+// Simulate live updates (In real scenarios, fetch data via WebSocket or AJAX)
+setInterval(() => {
+    let newTemperature = {
+        timestamp: new Date().toLocaleTimeString(),
+        temperature: Math.random() * 40  // Simulated temperature data
+    };
+    updateChart(newTemperature);
+}, 5000);  // Update every 5 seconds
+
+
+
 // Update Sensors data every 5 seconds
 setInterval(updateSensorData, 4000);
 

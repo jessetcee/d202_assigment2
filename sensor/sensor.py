@@ -17,10 +17,10 @@ def send_meter_data():
         
         if sensors:
             for sensor in sensors:
-                reading = random.randint(20, 35)
+                reading = random.randint(10, 35)
                 
                 if sensor[4] == "ACTIVE":
-                    reading = random.randint(20, 35)
+                    reading = random.randint(10, 35)
 
                 data.append({
                     "id": sensor[0],

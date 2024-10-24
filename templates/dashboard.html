@@ -8,16 +8,17 @@
     <h2>Live Temperature Readings</h2>
     <div id="readings">
         {% for reading in readings %}
-            <div id="card">
+            <div class="card" 
+                 data-temperature="{{ reading[4] }}">
                 <div class="card-group">
-                    <p id="sensor-name">{{ reading[2].capitalize() }}</p>
+                    <p class="sensor-name">{{ reading[2].capitalize() }}</p>
                 </div>
                 <div class="card-group">
-                    <h3 id="temperature">{{ reading[4] }}&#8451;</h3>
+                    <h3 class="temperature">{{ reading[4] }}&#8451;</h3>
                 </div>
                 <div class="card-group">
-                    <p id="location">{{ reading[3] }}</p>
-                    <p id="timestamp">{{ reading[5] }}</p>
+                    <p class="location">{{ reading[3] }}</p>
+                    <p class="timestamp">{{ reading[5] }}</p>
                 </div>
             </div>
         {% endfor %}
@@ -54,28 +55,57 @@ h2 {
     gap: 5px;
 }
 
-#card {
+.card {
     width: 200px;
     aspect-ratio: 1 / 1;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: rgba(0, 0, 0, 0.6); /* Default color */
     color: white;
     font-size: 25px;
     border-radius: 10px;
     text-align: center;
     gap: 5px;
+    transition: background-color 0.3s ease; /* Smooth color transition */
 }
 
-#temperature {
+.card.red-background {
+    background: rgb(219,12,1);
+    background: linear-gradient(90deg, rgba(219,12,1,1) 17%, rgba(251,154,154,1) 90%);   /* Red if temperature > 25°C */
+}
+
+.card.blue-background {
+    background: rgb(33,65,229);
+    background: linear-gradient(90deg, rgba(33,65,229,1) 17%, rgba(190,204,255,1) 90%);   /* Blue if temperature < 18°C */
+}
+
+.temperature {
     font-size: 40px;
 }
 
-#location, #timestamp {
+.location, .timestamp {
     font-size: 15px;
     color: #969696;
 }
 </style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const cards = document.querySelectorAll('.card');
+
+        cards.forEach(card => {
+            const temperature = parseFloat(card.getAttribute('data-temperature'));
+
+            // Change the card color based on temperature
+            if (temperature > 25) {
+                card.classList.add('red-background');
+            } else if (temperature < 20) {
+                card.classList.add('blue-background');
+            }
+        });
+    });
+</script>
+
 {% endblock %}
