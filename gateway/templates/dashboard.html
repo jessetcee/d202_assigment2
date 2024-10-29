@@ -3,7 +3,6 @@
 {% block title %}Dashboard{% endblock %}
 
 {% block content %}
-{% include 'navbar.html' %}
 <div id="dashboard">
     <h2>Live Temperature Readings</h2>
     <div id="readings">
@@ -26,56 +25,31 @@
 
 <style>
 #dashboard {
-    width: calc(100vw - 50px);
-    height: calc(100vh - 120px);
-    display: grid;
-    align-items: center;
-    justify-items: center;
-    justify-content: center;
-    grid-template-columns: 1fr;
-    grid-template-rows: 0.1fr 0.9fr;
-    overflow-y: scroll;
-    padding: 25px;
-    background-color: rgb(241, 241, 241);
-}
-
-h2 {
-    font-size: 30px;
-}
-
-#readings {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    align-content: flex-start;
-    flex-wrap: wrap;
-    gap: 5px;
-}
-
-#card {
-    width: 200px;
-    aspect-ratio: 1 / 1;
+    width: 100vw;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background-color: rgba(0, 0, 0, 0.6);
+}
+
+#readings {
+    width: 100vw;
+    height: 70vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+#card {
+    width: 10vw;
+    aspect-ratio: 1 / 1;
+    background-color: rgba(0, 0, 0, 0.5);
     color: white;
-    font-size: 25px;
     border-radius: 10px;
-    text-align: center;
-    gap: 5px;
 }
 
-#temperature {
-    font-size: 40px;
-}
-
-#location, #timestamp {
-    font-size: 15px;
-    color: #969696;
-}
 </style>
 {% endblock %}

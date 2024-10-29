@@ -134,68 +134,67 @@ def login():
         username = request.form.get("username")
         password = request.form.get("password")
         
-        conn = conn = sqlite3.connect(DATABASE)
+        conn = sqlite3.connect(DATABASE)
+        conn.cursor()
         user = conn.execute("SELECT * FROM Users WHERE username = ? AND password = ?", (username, password)).fetchone()
-        
-        print(username, password)
-        print(conn.execute("SELECT * FROM Users").fetchall())
-        
+        print(f'user entered the following details: {conn.execute("SELECT * FROM Users").fetchall()}')
         conn.close()
+
 
         if user:
             session['username'] = username
-            session['is_admin'] = user['is_admin']  # Store the admin status in the session
+            session['is_admin'] = user[-1]
             return redirect(url_for('dashboard'))
         else:
-            return "Invalid credentials, please try again."
+            return render_template("index.html")
     else:
         return render_template("index.html")
 
-# @app.route("/logout")
-# def logout():
-#     session.clear()
-#     return redirect(url_for('login'))
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect(url_for('login'))
 
 @app.route("/dashboard/", methods=['GET'])
 def dashboard():
     latest_readings = get_latest_readings()
     return render_template("dashboard.html", readings=latest_readings)
 
-# @app.route("/api/meters", methods=['GET', 'POST'])
-# def add_reading():
-#     if request.method == "POST":
-#         if request.is_json:
-#             try:
-#                 data = request.get_json()
+@app.route("/api/meters", methods=['GET', 'POST'])
+def add_reading():
+    if request.method == "POST":
+        if request.is_json:
+            try:
+                data = request.get_json()
 
-#                 for sensor in data:
-#                     values = (sensor["id"], sensor["reading"], sensor["timestamp"], sensor["location"])
+                for sensor in data:
+                    values = (sensor["id"], sensor["reading"], sensor["timestamp"], sensor["location"])
 
-#                     conn = sqlite3.connect(DATABASE)
-#                     conn.execute('INSERT INTO TemperatureReadings (sensor_id, temperature, timestamp, location) VALUES (?, ?, ?, ?)', values)
-#                     conn.commit()
-#                     conn.close()
+                    conn = sqlite3.connect(DATABASE)
+                    conn.execute('INSERT INTO TemperatureReadings (sensor_id, temperature, timestamp, location) VALUES (?, ?, ?, ?)', values)
+                    conn.commit()
+                    conn.close()
 
-#                 return jsonify({'message': 'Reading added successfully!'}), 201
-#             except Exception as e:
-#                 print(f'Error: {e}')
-#                 return jsonify({'error': str(e)}), 400
-#         else:
-#             print(f'Error: Request body must be JSON')
-#             return jsonify({'error': 'Request body must be JSON'}), 400
-#     elif request.method == "GET":
-#         try:
-#             conn = sqlite3.connect(DATABASE)
-#             data = conn.execute("SELECT * FROM Sensors").fetchall()
-#             conn.commit()
-#             conn.close()
+                return jsonify({'message': 'Reading added successfully!'}), 201
+            except Exception as e:
+                print(f'Error: {e}')
+                return jsonify({'error': str(e)}), 400
+        else:
+            print(f'Error: Request body must be JSON')
+            return jsonify({'error': 'Request body must be JSON'}), 400
+    elif request.method == "GET":
+        try:
+            conn = sqlite3.connect(DATABASE)
+            data = conn.execute("SELECT * FROM Sensors").fetchall()
+            conn.commit()
+            conn.close()
 
-#             return jsonify(data), 201
-#         except Exception as e:
-#             print(f'Error: {e}')
+            return jsonify(data), 201
+        except Exception as e:
+            print(f'Error: {e}')
 
-# @app.route('/readings')
-# def readings():
+@app.route('/readings')
+def readings():
     conn = sqlite3.connect(DATABASE)
     readings = conn.execute('''SELECT Tr.id, Tr.sensor_id, S.sensor_name, S.location, Tr.temperature, Tr.timestamp FROM TemperatureReadings Tr INNER JOIN Sensors S ON Tr.sensor_id = S.id''')
     return render_template('readings.html', readings=readings) 
@@ -209,8 +208,8 @@ def dashboard():
     conn.close()
     return redirect(url_for('readings'))
 
-# @app.route('/add-sensor', methods=['GET', 'POST'])
-# def add_sensor_route():
+@app.route('/add-sensor', methods=['GET', 'POST'])
+def add_sensor_route():
     if request.method == 'POST':
         sensor_name = request.form['sensor_name']
 
@@ -228,8 +227,8 @@ def dashboard():
     
     return render_template('add_sensor.html')  # Render the form to add a new sensor
 
-# @app.route("/admin_centre/")
-# def admin_centre():
+@app.route("/admin_centre/")
+def admin_centre():
     latest_readings = get_latest_readings()
     return render_template("admin_centre.html", readings=latest_readings )
 

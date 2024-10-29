@@ -1,41 +1,40 @@
 <nav>
     <div class="nav-group">
+        <p>JCOD</p>
+    </div>
+    <div class="nav-group">
         <a href="{{ url_for('dashboard') }}">DASHBOARD</a>
         {% if session.get('is_admin') %}
         <a href="{{ url_for('readings') }}">READINGS</a>
         <a href="{{ url_for('admin_centre') }}">ADMIN CENTRE</a>
-
         {% endif %}
+        {% request.endpoint %}
     </div>
-    <a href="{{ url_for('logout') }}">LOG OUT</a>
+    <div class="nav-group">
+        <a href="{{ url_for('logout') }}">LOG OUT</a>
+    </div>
 </nav>
 
 <style>
 nav {
+    width: 100vw;
+    height: 50px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-direction: row;
-    height: 50px;
-    padding: 10px 50px;
     background-color: #C5C5C5;
+    padding: 25px;
 }
 
 .nav-group {
     display: flex;
-    gap: 30px;
+    gap: 50px;
+    color: var(--black);
 }
 
-a {
+a, p {
     text-decoration: none;
-    color: black;
-    font-weight: 800;
-    transition: 0.3s;
-    font-size: 20px;
-    padding: 10px;
-}
-
-a:hover {
-    font-weight: 800;
+    margin: 0;
 }
 </style>
