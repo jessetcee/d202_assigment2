@@ -99,11 +99,15 @@ h2 {
             const temperature = parseFloat(card.getAttribute('data-temperature'));
 
             // Change the card color based on temperature
-            if (temperature > 25) {
+            if (temperature > 20) {
                 card.classList.add('red-background');
             } else if (temperature < 20) {
                 card.classList.add('blue-background');
             }
+               else if (temperature < 25 ){
+                card.classList.add('yellow-background')
+               }
+            
         });
     });
 </script>

@@ -3,8 +3,19 @@
 {% block title %}Admin Centre{% endblock %}
 
 {% block content %}
-<h1>Admin Centre</h1>
-<a href="{{ url_for('dashboard') }}">Dashboard</a>
+<div class="header">
+<h1>
+    <a href="/admin" style="text-decoration: none; color: inherit;">
+        Admin Centre
+    </a>
+</h1>
+</div>
+
+<div class="homebutton">
+<a href="{{ url_for('dashboard') }}"> <i class="fas fa-house"></i> 
+    Dashboard
+</a>
+</div>
 
 <!-- Buttons for adding, editing, and removing sensors -->
 
@@ -21,34 +32,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Live Sensor Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+    <script src="https://kit.fontawesome.com/f7aec1efea.js" crossorigin="anonymous"></script>
     <!-- Add a meta tag to refresh the page every 5 seconds -->
     <meta http-equiv="refresh" content="4">
     <title>Live Sensor Data</title>
     
-    <style>
-        body {
-            background-color: #f4f4f4;
-        }
-        .container {
-            margin-top: 50px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        table, th, td {
-            border: 1px solid black;
-        }
-        th, td {
-            padding: 15px;
-            text-align: left;
-        }
-    </style>
+    
 </head>
 <body>
     <div class="ui container">
         <h2>Live Temperature Readings</h2>
+        <div class="table-container"> 
 
         <table id="readings-table">
             <thead>
@@ -72,13 +66,106 @@
                 {% endfor %}
             </tbody>
         </table>
+        </div>
     </div>
    
   
 </body>
 </html>
-    
 
+<style>
+.header{
+  padding-left: 5px;
+  height: 50px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: #C5C5C5;
+  color: white;
+  font-size: 30px;
+}
+.header h1 {
+color: black;
+}
+
+.homebutton{
+    padding-left: 5px;
+}
+
+ body {
+            background-color: #f4f4f4;
+        }
+        .container {
+            margin-top: 50px;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin: 0 auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 15px;
+            text-align: left;
+        }
+
+
+
+
+
+#table-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    justify-content: flex-start;
+    overflow-y: scroll;
+}
+
+th {
+    width: auto;
+    background-color: rgb(224, 224, 224);
+    padding: 10px;
+    font-size: 20px;
+    white-space: nowrap;
+}
+
+td {
+    height: 1%;
+    white-space: nowrap;
+    text-align: center;
+    padding: 5px 10px;
+    background-color: white;
+    box-sizing: border-box;
+}
+
+
+.button a button {
+    background-color: grey; /* Default background color */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px; /* Optional spacing */
+    }
+
+.button a:nth-child(2) button { /* Edit Sensor */
+    background-color: #008CBA;
+    }
+
+.button a:nth-child(3) button { /* Remove Sensor */
+    background-color: #f44336;
+}
+
+
+</style>
 
 
 {% endblock %}
