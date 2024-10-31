@@ -6,29 +6,71 @@
 
 {% include 'navbar.html' %}
 
+<!-- sensor.html -->
+<h2>Search Sensors</h2>
+<form action="/sensors" method="get">
+    <label for="id">Sensor ID:</label>
+    <input type="number" id="id" name="id" placeholder="e.g., 1">
 
+    <label for="sensorname">Sensor Name:</label>
+    <input type="text" id="sensorname" name="sensorname" placeholder="e.g., Sensor A">
 
+    <button type="submit">Search</button>
+</form>
 
+<h2>Search Results</h2>
+<div class="table-container">
+<table>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div id="dashboard">
+    <tr>
+        <th>ID</th>
+        <th>Sensor Name</th>
+        <th>Location</th>
+    </tr>
+    {% for sensor in sensors %}
+    <tr>
+        <td>{{ sensor['id'] }}</td>
+        <td>{{ sensor['sensor_name'] }}</td>
+        <td>{{ sensor['location'] }}</td>
+    </tr>
+    {% endfor %}
+</table>
 </div>
 
+<!-- </table> -->
+
+<!-- <div id="dashboard">
+</div> -->
+
 <style>
+
+.table-container{
+width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    justify-content: flex-start;
+    overflow-y: scroll;
+}
+
+th {
+    width: auto;
+    background-color: rgb(224, 224, 224);
+    padding: 10px;
+    font-size: 20px;
+    white-space: nowrap;
+}
+
+td {
+    height: 1%;
+    white-space: nowrap;
+    text-align: center;
+    padding: 5px 10px;
+    background-color: white;
+    box-sizing: border-box;
+}
+
 
 #dashboard {
     width: calc(100vw - 50px);
@@ -43,6 +85,26 @@
     padding: 25px;
     background-color: rgb(241, 241, 241);
 }
+
+.container {
+            margin-top: 50px;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin: 0 auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 15px;
+            text-align: left;
+        }
 
 </style>
 {% endblock %}

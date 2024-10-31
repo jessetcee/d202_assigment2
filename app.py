@@ -218,11 +218,24 @@ def delete_readings():
     conn.close()
     return redirect(url_for('readings'))
 
-@app.route('/sensors')
+@app.route('/sensors', methods=['GET'])
 def sensors():
+    sensor_id = request.args.get('id')
+    sensorname = request.args.get('sensorname')
+
     conn = sqlite3.connect(DATABASE)
-    sensors = conn.execute("SELECT * FROM Sensors").fetchall()
-    conn.commit()
+    conn.row_factory = sqlite3.Row  
+    cursor = conn.cursor()
+
+    # Query based on conditions
+    if sensor_id:
+        cursor.execute("SELECT * FROM Sensors WHERE id = ?", (sensor_id,))
+    elif sensorname:
+        cursor.execute("SELECT * FROM Sensors WHERE sensor_name LIKE ?", (f"%{sensorname}%",))
+    # else:
+    #     cursor.execute("SELECT * FROM Sensors")
+
+    sensors = cursor.fetchall()
     conn.close()
 
     return render_template('sensors.html', sensors=sensors)
