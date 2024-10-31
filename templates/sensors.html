@@ -13,7 +13,9 @@
     <title>Sensor List</title>
 </head>
 <body>
+    <div class="header">
     <h1>Sensor List</h1>
+    </div>
     
    
     <form action="{{ url_for('sensors') }}" method="get">
@@ -31,7 +33,10 @@
         </select>
 
         <!-- Submit Button for Search -->
-        <button type="submit">Search</button>
+         <div class="button">
+            <a href="#"> <button type="submit">Search</button> </a>
+        
+        </div>
     </form>
 
     <table border="1">
@@ -62,6 +67,16 @@
 
 
 <style>
+
+.button a button{
+    background-color: #008CBA; /* Default background color */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px; /* Optional spacing */
+}
 
 .table-container{
 width: 100%;
