@@ -6,41 +6,60 @@
 
 {% include 'navbar.html' %}
 
-<!-- sensor.html -->
-<h2>Search Sensors</h2>
-<form action="/sensors" method="get">
-    <label for="id">Sensor ID:</label>
-    <input type="number" id="id" name="id" placeholder="e.g., 1">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sensor List</title>
+</head>
+<body>
+    <h1>Sensor List</h1>
+    
+   
+    <form action="{{ url_for('sensors') }}" method="get">
+        <label for="id">Sensor ID:</label>
+        <input type="text" name="id" id="id" placeholder="Search by ID">
+        
+        <label for="sensorname">Sensor Name:</label>
+        <input type="text" name="sensorname" id="sensorname" placeholder="Search by Name">
 
-    <label for="sensorname">Sensor Name:</label>
-    <input type="text" id="sensorname" name="sensorname" placeholder="e.g., Sensor A">
+        <!-- Toggle Button for Highest/Lowest Temperature -->
+        <label for="filter">Filter by Temperature:</label>
+        <select name="filter" id="filter">
+            <option value="highest" {% if filter == 'highest' %}selected{% endif %}>Highest</option>
+            <option value="lowest" {% if filter == 'lowest' %}selected{% endif %}>Lowest</option>
+        </select>
 
-    <button type="submit">Search</button>
-</form>
+        <!-- Submit Button for Search -->
+        <button type="submit">Search</button>
+    </form>
 
-<h2>Search Results</h2>
-<div class="table-container">
-<table>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Sensor ID</th>
+                <th>Sensor Name</th>
+                <th>Location</th>
+                <th>Temperature</th>
+                <th>Timestamp</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for sensor in sensors %}
+            <tr>
+                <td>{{ sensor['id'] }}</td>
+                <td>{{ sensor['sensor_name'] }}</td>
+                <td>{{ sensor['location'] }}</td>
+                <td>{{ sensor['temperature'] if sensor['temperature'] is not none else 'N/A' }}</td>
+                <td>{{ sensor['timestamp'] if sensor['timestamp'] is not none else 'N/A' }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
 
-    <tr>
-        <th>ID</th>
-        <th>Sensor Name</th>
-        <th>Location</th>
-    </tr>
-    {% for sensor in sensors %}
-    <tr>
-        <td>{{ sensor['id'] }}</td>
-        <td>{{ sensor['sensor_name'] }}</td>
-        <td>{{ sensor['location'] }}</td>
-    </tr>
-    {% endfor %}
-</table>
-</div>
 
-<!-- </table> -->
-
-<!-- <div id="dashboard">
-</div> -->
 
 <style>
 
@@ -108,3 +127,4 @@ td {
 
 </style>
 {% endblock %}
+

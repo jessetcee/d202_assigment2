@@ -218,27 +218,59 @@ def delete_readings():
     conn.close()
     return redirect(url_for('readings'))
 
+
+
 @app.route('/sensors', methods=['GET'])
 def sensors():
     sensor_id = request.args.get('id')
     sensorname = request.args.get('sensorname')
+    filter_option = request.args.get('filter', 'highest')  # Default to highest if not specified
 
     conn = sqlite3.connect(DATABASE)
     conn.row_factory = sqlite3.Row  
     cursor = conn.cursor()
 
-    # Query based on conditions
-    if sensor_id:
-        cursor.execute("SELECT * FROM Sensors WHERE id = ?", (sensor_id,))
-    elif sensorname:
-        cursor.execute("SELECT * FROM Sensors WHERE sensor_name LIKE ?", (f"%{sensorname}%",))
-    # else:
-    #     cursor.execute("SELECT * FROM Sensors")
+    # Base query to get the latest temperature reading for each sensor
+    query = '''
+    SELECT s.id, s.sensor_name, s.location, tr.temperature, tr.timestamp
+    FROM Sensors s
+    LEFT JOIN (
+        SELECT sensor_id, MAX(timestamp) AS latest_timestamp
+        FROM TemperatureReadings
+        GROUP BY sensor_id
+    ) latest ON s.id = latest.sensor_id
+    LEFT JOIN TemperatureReadings tr ON s.id = tr.sensor_id AND tr.timestamp = latest.latest_timestamp
+    '''
+    params = []
 
+    # Apply filtering conditions based on search input
+    if sensor_id:
+        query += " WHERE s.id = ?"
+        params.append(sensor_id)
+    elif sensorname:
+        query += " WHERE s.sensor_name LIKE ?"
+        params.append(f"%{sensorname}%")
+
+    # Order by temperature based on filter option
+    if filter_option == 'lowest':
+        query += " ORDER BY tr.temperature ASC"  # Lowest temperature first
+    else:
+        query += " ORDER BY tr.temperature DESC"  # Highest temperature first
+
+    # Execute the final query
+    cursor.execute(query, params)
     sensors = cursor.fetchall()
     conn.close()
 
-    return render_template('sensors.html', sensors=sensors)
+    return render_template('sensors.html', sensors=sensors, filter=filter_option)
+
+
+
+
+
+
+
+
 
 @app.route('/add-sensor', methods=['GET', 'POST'])
 def add_sensor_route():
