@@ -81,6 +81,11 @@ h2 {
     background: linear-gradient(90deg, rgba(33,65,229,1) 17%, rgba(190,204,255,1) 90%);   /* Blue if temperature < 18°C */
 }
 
+.card.yellow-background {
+    background: rgb(229, 111, 33);
+    background: linear-gradient(90deg, rgb(229, 138, 33) 17%, rgba(190,204,255,1) 100%);   /* Blue if temperature < 18°C */
+}
+
 .temperature {
     font-size: 40px;
 }
@@ -104,7 +109,7 @@ h2 {
             } else if (temperature < 20) {
                 card.classList.add('blue-background');
             }
-               else if (temperature < 25 ){
+               else if (temperature == 20 ){
                 card.classList.add('yellow-background')
                }
             
